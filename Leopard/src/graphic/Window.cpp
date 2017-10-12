@@ -100,6 +100,13 @@ namespace Leopard
 
 		void Window::Update()
 		{
+			GLenum error = glGetError();
+
+			if (error != GL_NO_ERROR)
+			{
+				LOG("OpenGL Error: " << error << std::endl);
+			}
+
 			glfwPollEvents();
 			glfwGetFramebufferSize(m_Window, &m_Width, &m_Height);
 			glfwSwapBuffers(m_Window);

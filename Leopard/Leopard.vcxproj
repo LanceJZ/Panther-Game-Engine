@@ -130,6 +130,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\graphic\Simple2DRenderer.cpp" />
+    <ClCompile Include="src\graphic\Renderer2D.cpp" />
+    <ClCompile Include="src\graphic\Renderable2D.cpp" />
+    <ClCompile Include="src\graphic\Buffer\IndexBuffer.cpp" />
+    <ClCompile Include="src\graphic\Buffer\Buffer.cpp" />
     <ClCompile Include="src\graphic\Shader.cpp" />
     <ClCompile Include="src\Utilities\File.cpp" />
     <ClCompile Include="src\Math\Matrix.cpp" />
@@ -139,8 +144,14 @@
     <ClCompile Include="src\Math\Vector2f.cpp" />
     <ClCompile Include="src\Math\Vector3f.cpp" />
     <ClCompile Include="src\Math\Vector4f.cpp" />
+    <ClCompile Include="src\graphic\Buffer\VertexArray.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\graphic\Simple2DRenderer.h" />
+    <ClInclude Include="src\graphic\Renderer2D.h" />
+    <ClInclude Include="src\graphic\Renderable2D.h" />
+    <ClInclude Include="src\graphic\Buffer\IndexBuffer.h" />
+    <ClInclude Include="src\graphic\Buffer\Buffer.h" />
     <ClInclude Include="src\graphic\Shader.h" />
     <ClInclude Include="src\Utilities\File.h" />
     <ClInclude Include="src\Math\Matrix.h" />
@@ -150,6 +161,7 @@
     <ClInclude Include="src\Math\Vector2f.h" />
     <ClInclude Include="src\Math\Vector3f.h" />
     <ClInclude Include="src\Math\Vector4f.h" />
+    <ClInclude Include="src\graphic\Buffer\VertexArray.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Shaders\basic.frag" />
