@@ -12,18 +12,12 @@ namespace Leopard
 
 		Matrix::Matrix()
 		{
-			for (int i = 0; i < 4 * 4; i++)
-			{
-				Elements[i] = 0.0f;
-			}
+			memset(Elements, 0, 4 * 4 * sizeof(float));
 		}
 
 		Matrix::Matrix(float diagonal)
 		{
-			for (int i = 0; i < 4 * 4; i++)
-			{
-				Elements[i] = 0.0f;
-			}
+			memset(Elements, 0, 4 * 4 * sizeof(float));
 
 			for (int i = 0; i < 4; i++)
 			{
@@ -63,17 +57,17 @@ namespace Leopard
 			return *this;
 		}
 
-		Matrix Matrix::Orthographic(float left, float right, float top, float bottom, float near, float far)
+		Matrix Matrix::Orthographic(float left, float right, float bottom, float top, float near, float far)
 		{
 			Matrix result(1.0f);
 
-			result.Elements[0 + 0 * 4] = 2 / (right - left);
-			result.Elements[1 + 1 * 4] = 2 / (top - bottom);
-			result.Elements[2 + 2 * 4] = 2 / (near - far);
+			result.Elements[0 + 0 * 4] = 2.0f / (right - left);
+			result.Elements[1 + 1 * 4] = 2.0f / (top - bottom);
+			result.Elements[2 + 2 * 4] = 2.0f / (near - far);
 
-			result.Elements[0 + 3 * 4] = 2 / (right + left) / (right - left);
-			result.Elements[1 + 3 * 4] = 2 / (top + bottom) / (top - bottom);
-			result.Elements[2 + 3 * 4] = 2 / (near + far) / (near - far);
+			result.Elements[0 + 3 * 4] = (right + left) / (left - right);
+			result.Elements[1 + 3 * 4] = (top + bottom) / (bottom - top);
+			result.Elements[2 + 3 * 4] = (near + far) / (far - near);
 
 			return result;
 		}
@@ -93,13 +87,13 @@ namespace Leopard
 			result.Elements[0 + 0 * 4] = a;
 			result.Elements[1 + 1 * 4] = q;
 			result.Elements[2 + 2 * 4] = b;
-			result.Elements[3 + 2 * 4] = c - 1.0f;
-			result.Elements[2 + 3 * 4] = c;
+			result.Elements[2 + 3 * 4] = c - 1.0f;
+			result.Elements[3 + 2 * 4] = c;
 
 			return result;
 		}
 
-		Matrix Matrix::Translation(const Vector3f & translation)
+		Matrix Matrix::Translate(const Vector3f & translation)
 		{
 			Matrix result(1.0f);
 
@@ -118,17 +112,17 @@ namespace Leopard
 			float s = sin(radians);
 			float omc = 1.0f - c;
 
-			result.Elements[0 + 0 * 4] = axis.X * omc + c;
+			result.Elements[0 + 0 * 4] = axis.X * axis.X * omc + c;
 			result.Elements[1 + 0 * 4] = axis.Y * axis.X * omc + axis.Z * s;
 			result.Elements[2 + 0 * 4] = axis.X * axis.Z * omc - axis.Y * s;
 
 			result.Elements[0 + 1 * 4] = axis.X * axis.Y * omc - axis.Z * s;
-			result.Elements[1 + 1 * 4] = axis.Y * omc + c;
+			result.Elements[1 + 1 * 4] = axis.Y * axis.Y * omc + c;
 			result.Elements[2 + 1 * 4] = axis.Y * axis.Z * omc + axis.X * s;
 
 			result.Elements[0 + 2 * 4] = axis.X * axis.Z * omc + axis.Y * s;
 			result.Elements[1 + 2 * 4] = axis.Y * axis.Z * omc - axis.X * s;
-			result.Elements[2 + 2 * 4] = axis.Z * omc + c;
+			result.Elements[2 + 2 * 4] = axis.Z * axis.Z * omc + c;
 
 			return result;
 		}

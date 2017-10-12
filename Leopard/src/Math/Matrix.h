@@ -9,8 +9,11 @@ namespace Leopard
 	{
 		struct Matrix
 		{
-			float Elements[4 * 4];
-
+			union
+			{
+				float Elements[4 * 4];
+				Vector4f Columns[4];
+			};
 
 			Matrix();
 			Matrix(float diagonal);
@@ -19,10 +22,10 @@ namespace Leopard
 			static Matrix Identity();
 			Matrix Multiply(const Matrix& other);
 
-			static Matrix Orthographic(float left, float right, float top, float bottom, float near, float far);
+			static Matrix Orthographic(float left, float right, float bottom, float top, float near, float far);
 			static Matrix Perspective(float fov, float aspectRatio, float near, float far);
 
-			static Matrix Translation(const Vector3f& translation);
+			static Matrix Translate(const Vector3f& translation);
 			static Matrix Rotation(float angle, const Vector3f& axis);
 			static Matrix Scale(const Vector3f& scale);
 
