@@ -1,10 +1,7 @@
 #pragma once
 
+#include <deque>
 #include <GL\glew.h>
-#include "Buffer\Buffer.h"
-#include "Buffer\IndexBuffer.h"
-#include "Buffer\VertexArray.h"
-#include "..\Math\Math.h"
 #include "Renderable2D.h"
 
 namespace Leopard

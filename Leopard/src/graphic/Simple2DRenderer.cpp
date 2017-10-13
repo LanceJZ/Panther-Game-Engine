@@ -12,7 +12,7 @@ namespace Leopard
 		{
 		}
 
-		void Simple2DRenderer::Submit(const Renderable2D * renderable)
+		void Simple2DRenderer::Submit(const Static_Sprite * renderable)
 		{
 			m_RenderQueue.push_back(renderable);
 		}
@@ -21,7 +21,7 @@ namespace Leopard
 		{
 			while (!m_RenderQueue.empty())
 			{
-				const Renderable2D* renderable = m_RenderQueue.front();
+				const Static_Sprite* renderable = m_RenderQueue.front();
 				renderable->getVAO()->Bind();
 				renderable->getIBO()->Bind();
 

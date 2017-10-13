@@ -1,36 +1,20 @@
 #pragma once
 
-#include "Shader.h"
-#include "Buffer\Buffer.h"
-#include "Buffer\IndexBuffer.h"
-#include "Buffer\VertexArray.h"
-#include "..\Math\Math.h"
+#include "Renderable2D.h"
 
 namespace Leopard
 {
 	namespace Graphics
 	{
-		struct VertexData
+		class Sprite : Renderable2D
 		{
-			Vector3f vertex;
-			Vector4f color;
-		};
-
-		using namespace Math;
-
-		class Renderable2D
-		{
-		protected:
-			Vector3f m_Position; // TODO Move to PositionedObject class.
-			Vector2f m_Size;
-			Vector4f m_Color;
-
+		private:
 			VertexArray* m_VertexArray;
 			IndexBuffer* m_IndexBuffer;
 
 		public:
-			Renderable2D(Vector3f position, Vector2f size, Vector4f color);
-			virtual ~Renderable2D();
+			Sprite(Vector3f position, Vector2f size, const Vector4f& color);
+			~Sprite();
 
 			inline const Vector3f& getPosition() const { return m_Position; }
 			inline const Vector2f& getSize() const { return m_Size; }
@@ -38,8 +22,6 @@ namespace Leopard
 
 			inline const VertexArray* getVAO() const { return m_VertexArray; }
 			inline const IndexBuffer* getIBO() const { return m_IndexBuffer; }
-
 		};
-
 	}
 }

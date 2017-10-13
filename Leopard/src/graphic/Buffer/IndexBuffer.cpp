@@ -15,6 +15,7 @@ namespace Leopard
 
 		IndexBuffer::~IndexBuffer()
 		{
+			glDeleteBuffers(1, &m_BufferID);
 		}
 		void IndexBuffer::Bind() const
 		{

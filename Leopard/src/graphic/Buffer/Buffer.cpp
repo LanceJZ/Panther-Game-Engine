@@ -16,6 +16,7 @@ namespace Leopard
 
 		Buffer::~Buffer()
 		{
+			glDeleteBuffers(1, &m_BufferID);
 		}
 
 		void Buffer::Bind() const

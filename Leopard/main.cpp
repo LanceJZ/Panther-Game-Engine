@@ -10,6 +10,9 @@
 #include "src/graphic/Window.h"
 #include "src/graphic/Shader.h"
 #include "src/graphic/Simple2DRenderer.h"
+#include "src\graphic\Static_Sprite.h"
+#include "src\graphic\Sprite.h"
+#include "src\graphic\BatchedRenderer2D.h" // Ep 9 1:27
 #include "src/Math/Math.h"
 #include "src/Utilities/File.h"
 #include "src/graphic/Buffer/Buffer.h"
@@ -42,12 +45,13 @@ int main()
 	Matrix ortho = Matrix::Orthographic(-80.0f, 80.0f, -60.0f, 60.0f, -1.0f, 1.0f);
 
 	shader.setUniform3f("light_pos", Vector3f(2, 1, 1));
-	shader.setUniform4f("setcolor", Vector4f(0.3f, 0.0f, 0.6f, 1.0f));
+	shader.setUniform4f("setcolor", Vector4f(0.5f, 0.5f, 0.5f, 1.0f));
 	shader.setUniformMatrix("pr_matrix", ortho);
 
-	Renderable2D spriteA(Vector3f(15, 15, 0), Vector2f(25, 25), Vector4f(0.6, 0, 1, 1), shader);
-	Renderable2D spriteB(Vector3f(-15, -10, 0), Vector2f(15, 15), Vector4f(0.8, 0, 0.5, 1), shader);
-	Simple2DRenderer renderer;
+	Sprite spriteA(Vector3f(15, 15, 0), Vector2f(25, 25), Vector4f(0.6, 0, 1, 1));
+	Sprite spriteB(Vector3f(0, 0, 0), Vector2f(15, 15), Vector4f(0.8, 0, 0.5, 1));
+
+	BatchedRenderer2D renderer;
 
 
 #if 0
@@ -61,6 +65,8 @@ int main()
 	shader.setUniformMatrix("vw_matrix", Matrix::Rotation(0.79f, Vector3f(0, 0, 1)));
 #endif
 
+
+#if 0
 	GLfloat vertices[] =
 	{
 		-10.5f, -10.5f, 0.0f,
@@ -90,8 +96,6 @@ int main()
 		0.7, 0, 0.2, 1,
 		0.8, 0, 0.1, 1
 	};
-
-#if 0
 	VertexArray sprite1, sprite2;
 	IndexBuffer ibo(indices, 6);
 	sprite1.addBuffer(new Buffer(vertices, 4 * 3, 3), 0);
@@ -160,8 +164,10 @@ int main()
 		ibo.Unbind();
 #endif
 
+		renderer.Begin();
 		renderer.Submit(&spriteA);
-		renderer.Submit(&spriteB);
+		renderer.Submit(&spriteB); //Working at 1:29
+		renderer.End();
 		renderer.Flush();
 
 		window.Update();
