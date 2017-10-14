@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../Utilities/File.h"
-#include "../Math/Math.h"
 #include <iostream>
 #include <vector>
 #include <GL/glew.h>
+#include "../Utilities/File.h"
+#include "../Math/Math.h"
 
 #if _DEBUG
 #define LOG(x) std::cout << x << std::endl

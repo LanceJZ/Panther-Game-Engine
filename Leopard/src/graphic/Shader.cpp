@@ -15,6 +15,11 @@ namespace Leopard
 			glDeleteProgram(m_ShaderID);
 		}
 
+		GLint Shader::getUniform(GLchar * name)
+		{
+			return GLint();
+		}
+
 		void Shader::setUniform1f(const GLchar * name, float value)
 		{
 			glUniform1f(getUniformLocation(name), value);

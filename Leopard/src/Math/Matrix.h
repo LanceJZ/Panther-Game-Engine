@@ -32,9 +32,6 @@ namespace Leopard
 			friend Matrix operator*(Matrix left, const Matrix& right);
 
 			Matrix& operator*=(const Matrix& other);
-
-			//friend std::ostream& operator<<(std::ostream& stream, const Matrix& Matrix);
-
 		};
 
 	}

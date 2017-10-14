@@ -1,7 +1,7 @@
 #pragma once
 
+#include <cstddef>
 #include "Renderer2D.h"
-#include "Sprite.h"
 
 namespace Leopard
 {
@@ -18,7 +18,7 @@ namespace Leopard
 
 		using namespace Math;
 
-		class BatchedRenderer2D// : Renderer2D
+		class BatchedRenderer2D : public Renderer2D
 		{
 		private:
 			GLuint m_VAO;
@@ -30,9 +30,9 @@ namespace Leopard
 			BatchedRenderer2D();
 			~BatchedRenderer2D();
 
-			void Begin();
-			void Submit(const Sprite* renderable);
-			void End();
+			void Begin() override;
+			void Submit(const Renderable2D* renderable) override;
+			void End() override;
 			void Flush();
 		private:
 			void Initialize();

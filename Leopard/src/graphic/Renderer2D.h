@@ -1,7 +1,7 @@
 #pragma once
 
 #include <deque>
-#include <GL\glew.h>
+#include <GL/glew.h>
 #include "Renderable2D.h"
 
 namespace Leopard
@@ -16,7 +16,9 @@ namespace Leopard
 			Renderer2D();
 			~Renderer2D();
 
+			virtual void Begin() {};
 			virtual void Submit(const Renderable2D* renderable) = 0;
+			virtual void End() {};
 			virtual void Flush() = 0;
 		};
 

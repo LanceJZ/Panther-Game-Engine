@@ -6,11 +6,11 @@ namespace Leopard
 {
 	namespace Graphics
 	{
-		class Sprite : Renderable2D
+		class Sprite : public Renderable2D
 		{
 		private:
-			VertexArray* m_VertexArray;
-			IndexBuffer* m_IndexBuffer;
+			//VertexArray* m_VertexArray;
+			//IndexBuffer* m_IndexBuffer;
 
 		public:
 			Sprite(Vector3f position, Vector2f size, const Vector4f& color);
@@ -20,8 +20,8 @@ namespace Leopard
 			inline const Vector2f& getSize() const { return m_Size; }
 			inline const Vector4f& getColor() const { return m_Color; }
 
-			inline const VertexArray* getVAO() const { return m_VertexArray; }
-			inline const IndexBuffer* getIBO() const { return m_IndexBuffer; }
+			//inline const VertexArray* getVAO() const { return m_VertexArray; }
+			//inline const IndexBuffer* getIBO() const { return m_IndexBuffer; }
 		};
 	}
 }

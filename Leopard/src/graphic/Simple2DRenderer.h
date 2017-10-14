@@ -1,7 +1,7 @@
 #pragma once
 
 #include <deque>
-#include <GL\glew.h>
+#include <GL/glew.h>
 
 #include "Static_Sprite.h"
 

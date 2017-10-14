@@ -38,6 +38,8 @@ namespace Leopard
 
 		Matrix Matrix::Multiply(const Matrix & other)
 		{
+			float data[16];
+
 			for (int y = 0; y < 4; y++)
 			{
 				for (int x = 0; x < 4; x++)
@@ -46,13 +48,14 @@ namespace Leopard
 
 					for (int e = 0; e < 4; e++)
 					{
-						sum += Elements[x + e] * other.Elements[e + y * 4];
+						sum += Elements[x + e * 4] * other.Elements[e + y * 4];
 					}
 
-					Elements[x + y * 4] = sum;
+					data[x + y * 4] = sum;
 				}
 			}
 
+			memcpy(Elements, data, 16 * sizeof(float));
 
 			return *this;
 		}
@@ -142,11 +145,6 @@ namespace Leopard
 		{
 			return left.Multiply(right);
 		}
-
-		//std::ostream & operator<<(std::ostream & stream, const Matrix & Matrix)
-		//{
-		//	// TODO: insert return statement here
-		//}
 
 		Matrix & Matrix::operator*=(const Matrix & other)
 		{

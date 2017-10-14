@@ -1,10 +1,9 @@
 #pragma once
 
 #include "Shader.h"
-#include "Buffer\Buffer.h"
-#include "Buffer\IndexBuffer.h"
-#include "Buffer\VertexArray.h"
-#include "..\Math\Math.h"
+#include "Buffer/Buffer.h"
+#include "Buffer/IndexBuffer.h"
+#include "Buffer/VertexArray.h"
 
 namespace Leopard
 {
@@ -13,7 +12,8 @@ namespace Leopard
 		struct VertexData
 		{
 			Vector3f vertex;
-			Vector4f color;
+			//Vector4f color;
+			unsigned int color;
 		};
 
 		using namespace Math;
@@ -21,7 +21,7 @@ namespace Leopard
 		class Renderable2D
 		{
 		protected:
-			Vector3f m_Position; // TODO Move to PositionedObject class.
+			Vector3f m_Position; // TODO Move to PositionedObject class or turn this into one.
 			Vector2f m_Size;
 			Vector4f m_Color;
 

@@ -21,26 +21,33 @@ namespace Leopard
 			m_Buffer = (VertexData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 		}
 
-		void BatchedRenderer2D::Submit(const Sprite * renderable) // Ep 9 1:10
+		void BatchedRenderer2D::Submit(const Renderable2D * renderable) // Ep 9 1:10
 		{
 			const Vector3f &position = renderable->getPosition();
 			const Vector2f &size = Vector2f(renderable->getSize().X * 0.5f, renderable->getSize().Y * 0.5f);
-			const Vector4f &color = renderable->getColor();
+			const Vector4f &colorin = renderable->getColor();
+
+			int r = colorin.X * 255.0f;
+			int g = colorin.Y * 255.0f;
+			int b = colorin.Z * 255.0f;
+			int a = colorin.W * 255.0f;
+
+			unsigned int colorout = a << 24 | b << 16 | g << 8 | r;
 
 			m_Buffer->vertex = Vector3f(position.X - size.X, position.Y - size.Y, position.Z);
-			m_Buffer->color = color;
+			m_Buffer->color = colorout;
 			m_Buffer++;
 
 			m_Buffer->vertex = Vector3f(position.X - size.X, position.Y + size.Y, position.Z);
-			m_Buffer->color = color;
+			m_Buffer->color = colorout;
 			m_Buffer++;
 
 			m_Buffer->vertex = Vector3f(position.X + size.X, position.Y + size.Y, position.Z);
-			m_Buffer->color = color;
+			m_Buffer->color = colorout;
 			m_Buffer++;
 
 			m_Buffer->vertex = Vector3f(position.X + size.X, position.Y - size.Y, position.Z);
-			m_Buffer->color = color;
+			m_Buffer->color = colorout;
 			m_Buffer++;
 
 			m_IndexCount += 6;
@@ -74,8 +81,9 @@ namespace Leopard
 			glBufferData(GL_ARRAY_BUFFER, RENDERER_BUFFER_SIZE, NULL, GL_DYNAMIC_DRAW);
 			glEnableVertexAttribArray(SHADER_VERTEX_INDEX);
 			glEnableVertexAttribArray(SHADER_COLOR_INDEX);
-			glVertexAttribPointer(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*) 0);
-			glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*) (3 * sizeof(GLfloat)));
+			glVertexAttribPointer(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*) NULL);
+			glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE,
+				(const GLvoid*) (offsetof(VertexData, VertexData::color)));
 			glBindBuffer(GL_ARRAY_BUFFER, NULL);
 
 			GLushort indices[RENDERER_INDICES_SIZE];
