@@ -36,6 +36,7 @@ namespace Leopard
 			//m_Shader->Enable();
 			m_Renderer->Begin();
 
+
 			for (const Renderable2D* renderable : m_Renderables)
 			{
 				m_Renderer->Submit(renderable);

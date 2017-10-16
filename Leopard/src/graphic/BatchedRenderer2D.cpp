@@ -34,6 +34,28 @@ namespace Leopard
 
 			unsigned int colorout = a << 24 | b << 16 | g << 8 | r;
 
+			m_Buffer->vertex = *m_TransformationBack *
+				Vector3f(position.X - size.X, position.Y - size.Y, position.Z);
+			m_Buffer->color = colorout;
+			m_Buffer++;
+
+			m_Buffer->vertex = *m_TransformationBack *
+				Vector3f(position.X - size.X, position.Y + size.Y, position.Z);
+			m_Buffer->color = colorout;
+			m_Buffer++;
+
+			m_Buffer->vertex = *m_TransformationBack *
+				Vector3f(position.X + size.X, position.Y + size.Y, position.Z);
+			m_Buffer->color = colorout;
+			m_Buffer++;
+
+			m_Buffer->vertex = *m_TransformationBack *
+				Vector3f(position.X + size.X, position.Y - size.Y, position.Z);
+			m_Buffer->color = colorout;
+			m_Buffer++;
+
+
+#if 0
 			m_Buffer->vertex = Vector3f(position.X - size.X, position.Y - size.Y, position.Z);
 			m_Buffer->color = colorout;
 			m_Buffer++;
@@ -49,6 +71,7 @@ namespace Leopard
 			m_Buffer->vertex = Vector3f(position.X + size.X, position.Y - size.Y, position.Z);
 			m_Buffer->color = colorout;
 			m_Buffer++;
+#endif
 
 			m_IndexCount += 6;
 		}

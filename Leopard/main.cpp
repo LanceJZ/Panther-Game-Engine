@@ -42,10 +42,29 @@ int main()
 	shaderA.setUniform4f("color", Vector4f(0.5f, 0.5f, 0.5f, 1.0f));
 
 	TileLayer layer(&shader);
-	layer.Add(new  Sprite(Vector3f(15.0f, 15.0f, 0.0f), Vector2f(25.0f, 25.0f), Vector4f(0.6f, 0.0f, 1.0f, 1.0f)));
+	//layer.Add(new  Sprite(Vector3f(15.0f, 15.0f, 0.0f), Vector2f(55.0f, 55.0f), Vector4f(0.6f, 0.0f, 1.0f, 1.0f)));
+
+	srand(time(NULL));
+
+	std::vector<Sprite> sprites;
+
+	for (int i = 0; i < 300; i++)
+	{
+		float x = (rand() % 800) - 400;
+		float y = (rand() % 600) - 300;
+
+		float r = (rand() % 100) *0.01f;
+		float b = (rand() % 100) *0.01f;
+
+		Vector2f size = Vector2f(rand() & 25 + 10, rand() & 25 + 10);
+
+		Vector3f pos = Vector3f(x, y, 2.0f);
+		Vector4f col = Vector4f(r, 0.0f, b, 1.0f);
+
+		layer.Add( new Sprite(pos, Vector2f(15.0f, 15.0f), col));
+	}
 
 #if 0
-
 	Matrix ortho = Matrix::Orthographic(-400.0f, 400.0f, -300.0f, 300.0f, -10.0f, 10.0f);
 	shader.setUniformMatrix("pr_matrix", ortho);
 
@@ -55,23 +74,6 @@ int main()
 	Sprite spriteA(Vector3f(15.0f, 15.0f, 0.0f), Vector2f(25.0f, 25.0f), Vector4f(0.6f, 0.0f, 1.0f, 1.0f));
 	Sprite spriteB(Vector3f(0.0f, 0.0f, 0.0f), Vector2f(15.0f, 15.0f), Vector4f(0.8f, 0.0f, 0.5f, 1.0f));
 
-	srand(time(NULL));
-
-	std::vector<Sprite> sprites;
-
-	for (int i = 0; i < 9990; i++)
-	{
-		float x = (rand() % 800) - 400;
-		float y = (rand() % 600) - 300;
-
-		float r = (rand() % 100) *0.01f;
-		float b = (rand() % 100) *0.01f;
-
-		Vector3f pos = Vector3f(x, y, 2.0f);
-		Vector4f col = Vector4f(r, 0.0f, b, 1.0f);
-
-		sprites.push_back(Sprite(pos, Vector2f(1.0f, 1.0f), col));
-	}
 
 
 #if 0

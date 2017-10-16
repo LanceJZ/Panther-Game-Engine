@@ -141,10 +141,43 @@ namespace Leopard
 			return result;
 		}
 
-		Matrix operator*(Matrix left, const Matrix & right)
+		Vector3f Matrix::Multiply(const Vector3f & other) const
+		{
+			return Vector3f
+			(
+				Columns[0].X * other.X + Columns[1].X * other.Y + Columns[2].X * other.Z + Columns[3].X,
+				Columns[0].Y * other.X + Columns[1].Y * other.Y + Columns[2].Y * other.Z + Columns[3].Y,
+				Columns[0].Z * other.X + Columns[1].X * other.Y + Columns[2].Z * other.Z + Columns[3].Z
+			);
+		}
+
+		Vector4f Matrix::Multiply(const Vector4f & other) const
+		{
+
+			return Vector4f
+			(
+				Columns[0].X * other.X + Columns[1].X * other.Y + Columns[2].X * other.Z + Columns[3].X * other.W,
+				Columns[0].Y * other.X + Columns[1].Y * other.Y + Columns[2].Y * other.Z + Columns[3].Y * other.W,
+				Columns[0].Z * other.X + Columns[1].X * other.Y + Columns[2].Z * other.Z + Columns[3].Z * other.W,
+				Columns[0].W * other.X + Columns[1].W * other.Y + Columns[2].W * other.Z + Columns[3].W * other.W
+			);
+		} // Ep 12 33:21
+
+		Vector3f operator*(const Matrix& left, const Vector3f& right)
 		{
 			return left.Multiply(right);
 		}
+
+		Vector4f operator*(const Matrix & left, const Vector4f& right)
+		{
+			return left.Multiply(right);
+		}
+
+		Matrix operator*(Matrix& left, const Matrix& right)
+		{
+			return left.Multiply(right);
+		}
+
 
 		Matrix & Matrix::operator*=(const Matrix & other)
 		{
