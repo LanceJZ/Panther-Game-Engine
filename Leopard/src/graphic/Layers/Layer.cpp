@@ -11,9 +11,7 @@ namespace Leopard
 		Layer::Layer(Renderer2D * renderer, Shader* shader, Matrix projectionMatrix)
 			: m_Renderer(renderer), m_Shader(shader), m_PMatrix(projectionMatrix)
 		{
-			//m_Shader->Enable();
 			m_Shader->setUniformMatrix("pr_matrix", m_PMatrix);
-			//m_Shader->Disable();
 		}
 
 		Layer::~Layer()
@@ -33,13 +31,13 @@ namespace Leopard
 		}
 		void Layer::Draw()
 		{
-			//m_Shader->Enable();
+			m_Shader->Enable();
 			m_Renderer->Begin();
 
 
 			for (const Renderable2D* renderable : m_Renderables)
 			{
-				m_Renderer->Submit(renderable);
+				renderable->Submit(m_Renderer);
 			}
 
 			m_Renderer->End();

@@ -1,5 +1,6 @@
 #include "BatchedRenderer2D.h"
 
+
 namespace Leopard
 {
 	namespace Graphics
@@ -54,6 +55,7 @@ namespace Leopard
 			m_Buffer->color = colorout;
 			m_Buffer++;
 
+			m_IndexCount += 6;
 
 #if 0
 			m_Buffer->vertex = Vector3f(position.X - size.X, position.Y - size.Y, position.Z);
@@ -72,8 +74,6 @@ namespace Leopard
 			m_Buffer->color = colorout;
 			m_Buffer++;
 #endif
-
-			m_IndexCount += 6;
 		}
 
 		void BatchedRenderer2D::Flush()
@@ -91,6 +91,7 @@ namespace Leopard
 		void BatchedRenderer2D::End()
 		{
 			glUnmapBuffer(GL_ARRAY_BUFFER);
+			m_Buffer = nullptr;
 			glBindBuffer(GL_ARRAY_BUFFER, NULL);
 		}
 
@@ -127,7 +128,8 @@ namespace Leopard
 			}
 
 			m_IBO = new IndexBuffer(indices, RENDERER_INDICES_SIZE);
-
+			m_Buffer = nullptr;
+			m_IndexCount = 0;
 			glBindVertexArray(NULL); //54:04 Ep 9
 		}
 	}

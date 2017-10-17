@@ -1,14 +1,17 @@
 #pragma once
 
+#include <vector>
 #include <deque>
 #include <GL/glew.h>
-#include "Renderable2D.h"
+#include "../Math/Math.h"
 
 namespace Leopard
 {
 	namespace Graphics
 	{
 		using namespace Math;
+
+		class Renderable2D;
 
 		class Renderer2D
 		{

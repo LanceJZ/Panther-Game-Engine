@@ -86,8 +86,9 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <BasicRuntimeChecks>UninitializedLocalUsageCheck</BasicRuntimeChecks>
+      <MinimalRebuild>true</MinimalRebuild>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -156,6 +157,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\graphic\Layers\Group.cpp" />
     <ClCompile Include="src\graphic\Layers\Layer.cpp" />
     <ClCompile Include="src\graphic\Sprite.cpp" />
     <ClCompile Include="src\graphic\BatchedRenderer2D.cpp" />
@@ -179,6 +181,7 @@
     <ClCompile Include="src\graphic\Layers\TileLayer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\graphic\Layers\Group.h" />
     <ClInclude Include="src\graphic\Layers\Layer.h" />
     <ClInclude Include="src\graphic\Sprite.h" />
     <ClInclude Include="src\graphic\BatchedRenderer2D.h" />

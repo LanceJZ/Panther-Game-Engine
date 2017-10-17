@@ -38,7 +38,12 @@ namespace Leopard
 
 			Matrix Multiply(const Matrix& other);
 			Matrix& operator*=(const Matrix& other);
-		};
+
+			Vector4f getColumn(int index)
+			{
+				index *= 4;
+				return Vector4f(Elements[index], Elements[index + 1], Elements[index + 2], Elements[index + 3]);}
+			};
 
 	}
 }

@@ -40,22 +40,22 @@ namespace Leopard
 		{
 			float data[16];
 
-			for (int y = 0; y < 4; y++)
+			for (int row = 0; row < 4; row++)
 			{
-				for (int x = 0; x < 4; x++)
+				for (int col = 0; col < 4; col++)
 				{
 					float sum = 0.0f;
 
 					for (int e = 0; e < 4; e++)
 					{
-						sum += Elements[x + e * 4] * other.Elements[e + y * 4];
+						sum += Elements[e + row * 4] * other.Elements[col + e * 4];
 					}
 
-					data[x + y * 4] = sum;
+					data[col + row * 4] = sum;
 				}
 			}
 
-			memcpy(Elements, data, 16 * sizeof(float));
+			memcpy(Elements, data, 4 * 4 * sizeof(float));
 
 			return *this;
 		}
@@ -116,15 +116,15 @@ namespace Leopard
 			float omc = 1.0f - c;
 
 			result.Elements[0 + 0 * 4] = axis.X * axis.X * omc + c;
-			result.Elements[1 + 0 * 4] = axis.Y * axis.X * omc + axis.Z * s;
-			result.Elements[2 + 0 * 4] = axis.X * axis.Z * omc - axis.Y * s;
+			result.Elements[0 + 1 * 4] = axis.Y * axis.X * omc + axis.Z * s;
+			result.Elements[0 + 2 * 4] = axis.X * axis.Z * omc - axis.Y * s;
 
-			result.Elements[0 + 1 * 4] = axis.X * axis.Y * omc - axis.Z * s;
+			result.Elements[1 + 0 * 4] = axis.X * axis.Y * omc - axis.Z * s;
 			result.Elements[1 + 1 * 4] = axis.Y * axis.Y * omc + c;
-			result.Elements[2 + 1 * 4] = axis.Y * axis.Z * omc + axis.X * s;
+			result.Elements[1 + 2 * 4] = axis.Y * axis.Z * omc + axis.X * s;
 
-			result.Elements[0 + 2 * 4] = axis.X * axis.Z * omc + axis.Y * s;
-			result.Elements[1 + 2 * 4] = axis.Y * axis.Z * omc - axis.X * s;
+			result.Elements[2 + 0 * 4] = axis.X * axis.Z * omc + axis.Y * s;
+			result.Elements[2 + 1 * 4] = axis.Y * axis.Z * omc - axis.X * s;
 			result.Elements[2 + 2 * 4] = axis.Z * axis.Z * omc + c;
 
 			return result;
@@ -145,9 +145,9 @@ namespace Leopard
 		{
 			return Vector3f
 			(
-				Columns[0].X * other.X + Columns[1].X * other.Y + Columns[2].X * other.Z + Columns[3].X,
-				Columns[0].Y * other.X + Columns[1].Y * other.Y + Columns[2].Y * other.Z + Columns[3].Y,
-				Columns[0].Z * other.X + Columns[1].X * other.Y + Columns[2].Z * other.Z + Columns[3].Z
+				Columns[0].X * other.X + Columns[1].X * other.Y + Columns[2].Y * other.Z + Columns[3].Y,
+				Columns[0].Y * other.X + Columns[1].Y * other.Y + Columns[2].X * other.Z + Columns[3].X,
+				Columns[0].Z * other.X + Columns[1].Z * other.Y + Columns[2].Z * other.Z + Columns[3].Z
 			);
 		}
 

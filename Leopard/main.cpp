@@ -1,14 +1,10 @@
-//#pragma comment(lib, "opengl32.lib")
-//#pragma comment(lib, "glu32.lib")
-//#pragma comment(lib, "glfw3.lib")
-//#pragma comment(lib, "glew32s.lib") //Episode 10 19:42 for release mode. glfw3.lib;glew32s.lib;opengl32.lib;glu32.lib
-
 #include "src/graphic/Window.h"
 #include "src/graphic/Shader.h"
 #include "src/graphic/Sprite.h"
 #include "src/graphic/BatchedRenderer2D.h" // Episode 9 1:27
 #include "src/Utilities/Timer.h"
-#include "src\graphic\Layers\TileLayer.h"
+#include "src/graphic/Layers/TileLayer.h"
+#include "src/graphic/Layers/Group.h"
 
 #if _DEBUG
 #define LOG(x) std::cout << x << std::endl
@@ -37,12 +33,38 @@ int main()
 #endif
 
 	shader.Enable();
+	shader.setUniform3f("light_pos", Vector3f(2, 2, 1));
+	shader.setUniform4f("color", Vector4f(0.9f, 0.0f, 0.6f, 1.0f));
 	shaderA.Enable();
 	shaderA.setUniform3f("light_pos", Vector3f(-2, -2, 1));
-	shaderA.setUniform4f("color", Vector4f(0.5f, 0.5f, 0.5f, 1.0f));
+	shaderA.setUniform4f("color", Vector4f(0.6f, 0.0f, 0.9f, 1.0f));
 
-	TileLayer layer(&shader);
-	//layer.Add(new  Sprite(Vector3f(15.0f, 15.0f, 0.0f), Vector2f(55.0f, 55.0f), Vector4f(0.6f, 0.0f, 1.0f, 1.0f)));
+	TileLayer layer(&shaderA);
+	TileLayer layerB(&shaderA);
+
+	Matrix transform = Matrix::Translate(Vector3f(-5.0f, -5.0f, 0.0f)) *
+		Matrix::Rotation(0.7f, Vector3f(0.0f, 0.0f, 1.0f));
+
+	Group* group = new Group(Matrix::Translate(Vector3f(90.0f, 90.0f, 0.0f)));
+	Group* group2 = new Group(transform);
+
+	Sprite* button = new Sprite(Vector3f(0.0f, 0.0f, 0.0f), Vector2f(55.0f, 35.0f), Vector4f(0.6f, 0.0f, 1.0f, 1.0f));
+	Sprite* buttonA = new Sprite(Vector3f(0.0f, 0.0f, 0.0f), Vector2f(45.0f, 25.0f), Vector4f(0.9f, 0.0f, 8.0f, 1.0f));
+
+	Sprite* buttonC = new Sprite(Vector3f(0.0f, 0.0f, 0.0f), Vector2f(25.0f, 15.0f), Vector4f(0.3f, 0.0f, 0.5f, 1.0f));
+	Sprite* buttonD = new Sprite(Vector3f(0.0f, 0.0f, 0.0f), Vector2f(35.0f, 25.0f), Vector4f(1.0f, 0.0f, 0.5f, 1.0f));
+
+	group->Add(button);
+	group->Add(buttonA);
+
+	group2->Add(buttonD);
+	group2->Add(buttonC);
+
+	group->Add(group2);
+
+	layerB.Add(group);
+
+	//layer.Add(new  Sprite(Vector3f(50.0f, 50.0f, 0.0f), Vector2f(55.0f, 35.0f), Vector4f(0.6f, 0.0f, 1.0f, 1.0f)));
 
 	srand(time(NULL));
 
@@ -61,7 +83,7 @@ int main()
 		Vector3f pos = Vector3f(x, y, 2.0f);
 		Vector4f col = Vector4f(r, 0.0f, b, 1.0f);
 
-		layer.Add( new Sprite(pos, Vector2f(15.0f, 15.0f), col));
+		//layer.Add( new Sprite(pos, Vector2f(15.0f, 15.0f), col));
 	}
 
 #if 0
@@ -206,6 +228,7 @@ int main()
 #endif
 
 		layer.Draw();
+		layerB.Draw();
 
 		window.Update();
 

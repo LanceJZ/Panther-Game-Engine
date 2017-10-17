@@ -17,7 +17,7 @@ namespace Leopard
 
 		void Renderer2D::Push(const Matrix& matrix, bool override)
 		{
-			if (override)
+			if (!override)
 				m_TransformationStack.push_back(matrix);
 			else
 				m_TransformationStack.push_back(m_TransformationStack.back() * matrix);

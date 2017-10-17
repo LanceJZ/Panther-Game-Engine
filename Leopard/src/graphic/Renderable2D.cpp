@@ -12,5 +12,14 @@ namespace Leopard
 		Renderable2D::~Renderable2D()
 		{
 		}
+
+		void Renderable2D::Submit(Renderer2D * renderer) const
+		{
+			renderer->Submit(this);
+		}
+
+		Renderable2D::Renderable2D()
+		{
+		}
 	}
 }
