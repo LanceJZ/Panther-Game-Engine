@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cstddef>
-#include "Renderer2D.h"
 #include "Renderable2D.h"
 #include "Buffer/IndexBuffer.h"
 
@@ -16,7 +15,9 @@ namespace Leopard
 #define RENDERER_INDICES_SIZE RENDERER_MAX_SPRITES * 6
 
 #define SHADER_VERTEX_INDEX 0
-#define SHADER_COLOR_INDEX 1
+#define SHADER_UV_INDEX		1
+#define SHADER_TID_INDEX	2
+#define SHADER_COLOR_INDEX	3
 
 		using namespace Math;
 
@@ -28,6 +29,8 @@ namespace Leopard
 			IndexBuffer* m_IBO;
 			GLsizei m_IndexCount;
 			VertexData* m_Buffer;
+
+			std::vector<GLuint> m_TextureSlots;
 		public:
 			BatchedRenderer2D();
 			~BatchedRenderer2D();

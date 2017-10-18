@@ -4,7 +4,7 @@
 #include "Buffer/Buffer.h"
 #include "Buffer/IndexBuffer.h"
 #include "Buffer/VertexArray.h"
-
+#include "Texture.h"
 #include "Renderer2D.h"
 
 namespace Leopard
@@ -13,9 +13,10 @@ namespace Leopard
 	{
 		struct VertexData
 		{
-			Vector3f vertex;
-			//Vector4f color;
-			unsigned int color;
+			Vector3f Vertex;
+			Vector2f UV;
+			float TID;
+			unsigned int Color;
 		};
 
 		using namespace Math;
@@ -26,9 +27,8 @@ namespace Leopard
 			Vector3f m_Position; // TODO Move to PositionedObject class or turn this into one.
 			Vector2f m_Size;
 			Vector4f m_Color;
-
-			//VertexArray* m_VertexArray;
-			//IndexBuffer* m_IndexBuffer;
+			std::vector<Vector2f> m_UV;
+			Texture* m_Texture;
 
 		public:
 			Renderable2D(Vector3f position, Vector2f size, Vector4f color);
@@ -38,12 +38,16 @@ namespace Leopard
 
 			inline const Vector3f& getPosition() const { return m_Position; }
 			inline const Vector2f& getSize() const { return m_Size; }
+			inline const std::vector<Vector2f>& getUV() const { return m_UV; }
 			inline const Vector4f& getColor() const { return m_Color; }
 
-			//inline const VertexArray* getVAO() const { return m_VertexArray; }
-			//inline const IndexBuffer* getIBO() const { return m_IndexBuffer; }
+			inline void setTexture(Texture * texture) { m_Texture = texture; }
+			inline const Texture* getTexture() const { return m_Texture; }
+			inline const GLuint getTID() const { return m_Texture == nullptr ? NULL : m_Texture->getID(); }
 		protected:
 			Renderable2D();
+		private:
+			void SetUVDefaults();
 		};
 
 	}

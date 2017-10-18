@@ -7,6 +7,20 @@ namespace Leopard
 		Renderable2D::Renderable2D(Vector3f position, Vector2f size, Vector4f color)
 			: m_Position(position), m_Size(size), m_Color(color)
 		{
+			SetUVDefaults();
+		}
+
+		Renderable2D::Renderable2D()
+		{
+			SetUVDefaults();
+		}
+
+		void Renderable2D::SetUVDefaults()
+		{
+			m_UV.push_back(Vector2f(0, 0));
+			m_UV.push_back(Vector2f(0, 1));
+			m_UV.push_back(Vector2f(1, 1));
+			m_UV.push_back(Vector2f(1, 0));
 		}
 
 		Renderable2D::~Renderable2D()
@@ -18,8 +32,5 @@ namespace Leopard
 			renderer->Submit(this);
 		}
 
-		Renderable2D::Renderable2D()
-		{
-		}
 	}
 }

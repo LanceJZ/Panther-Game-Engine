@@ -1,10 +1,13 @@
+#include <time.h>
+
+#include "src/Utilities/Timer.h"
 #include "src/graphic/Window.h"
 #include "src/graphic/Shader.h"
 #include "src/graphic/Sprite.h"
 #include "src/graphic/BatchedRenderer2D.h" // Episode 9 1:27
-#include "src/Utilities/Timer.h"
 #include "src/graphic/Layers/TileLayer.h"
-#include "src/graphic/Layers/Group.h"
+//#include "src/graphic/Layers/Group.h"
+#include "src/graphic/Texture.h"
 
 #if _DEBUG
 #define LOG(x) std::cout << x << std::endl
@@ -22,25 +25,28 @@ int main()
 	int joyNumber = glfwJoystickPresent(GLFW_JOYSTICK_1);
 
 	Window window("Leopard Game Engine", 800, 600);
-	glClearColor(0.01f, 0, 0.04f, 1);
+	glClearColor(0.08f, 0, 0.3f, 1);
 
 	//-----------------------Testing.
 #if 1
+	//He has pr * vw * ml * pos
 	Shader shader("src/shaders/basic.vert", "src/shaders/basic.frag");
-	Shader shaderA("src/shaders/basic.vert", "src/shaders/basic.frag");
+	//Shader shaderA("src/shaders/basic.vert", "src/shaders/basic.frag");
+
+
 #else
 	Shader shader("shaders/basic.vert", "shaders/basic.frag");
 #endif
 
-	shader.Enable();
-	shader.setUniform3f("light_pos", Vector3f(2, 2, 1));
-	shader.setUniform4f("color", Vector4f(0.9f, 0.0f, 0.6f, 1.0f));
+
+	TileLayer layer(&shader);
+
+#if 0
 	shaderA.Enable();
 	shaderA.setUniform3f("light_pos", Vector3f(-2, -2, 1));
 	shaderA.setUniform4f("color", Vector4f(0.6f, 0.0f, 0.9f, 1.0f));
 
-	TileLayer layer(&shaderA);
-	TileLayer layerB(&shaderA);
+	TileLayer layerB(&shader);
 
 	Matrix transform = Matrix::Translate(Vector3f(-5.0f, -5.0f, 0.0f)) *
 		Matrix::Rotation(0.7f, Vector3f(0.0f, 0.0f, 1.0f));
@@ -66,11 +72,14 @@ int main()
 
 	//layer.Add(new  Sprite(Vector3f(50.0f, 50.0f, 0.0f), Vector2f(55.0f, 35.0f), Vector4f(0.6f, 0.0f, 1.0f, 1.0f)));
 
+#endif
+
 	srand(time(NULL));
 
-	std::vector<Sprite> sprites;
+	//std::vector<Sprite> sprites;
+	Texture* texture = new Texture("Logo.png");
 
-	for (int i = 0; i < 300; i++)
+	for (int i = 0; i < 1000; i++)
 	{
 		float x = (rand() % 800) - 400;
 		float y = (rand() % 600) - 300;
@@ -78,20 +87,32 @@ int main()
 		float r = (rand() % 100) *0.01f;
 		float b = (rand() % 100) *0.01f;
 
-		Vector2f size = Vector2f(rand() & 25 + 10, rand() & 25 + 10);
-
+		float sizeXY = rand() & 50 + 30;
+		Vector2f size = Vector2f(rand() & 50 + 30, rand() & 50 + 30);
 		Vector3f pos = Vector3f(x, y, 2.0f);
 		Vector4f col = Vector4f(r, 0.0f, b, 1.0f);
 
-		//layer.Add( new Sprite(pos, Vector2f(15.0f, 15.0f), col));
+		//Sprite* sprite = new Sprite(pos, Vector2f(sizeXY, sizeXY), col);
+		Sprite* sprite = new Sprite(pos, Vector2f(sizeXY, sizeXY), texture);
+
+		layer.Add(sprite);
 	}
 
+
+	GLint texIDs[] =
+	{
+		0,1,2,3,4,5,6,7,8,9
+	};
+
+	shader.Enable();
+	shader.setUniform1iv("textures", texIDs, 10);
+	//shader.setUniformMatrix("pr_matrix", Matrix::Orthographic(-400.0f, 400.0f, -300.0f, 300.0f, -10.0f, 10.0f));
+
 #if 0
+	BatchedRenderer2D renderer;
+	shader.setUniform3f("light_pos", Vector3f(2, 2, 1));
 	Matrix ortho = Matrix::Orthographic(-400.0f, 400.0f, -300.0f, 300.0f, -10.0f, 10.0f);
 	shader.setUniformMatrix("pr_matrix", ortho);
-
-
-	BatchedRenderer2D renderer;
 
 	Sprite spriteA(Vector3f(15.0f, 15.0f, 0.0f), Vector2f(25.0f, 25.0f), Vector4f(0.6f, 0.0f, 1.0f, 1.0f));
 	Sprite spriteB(Vector3f(0.0f, 0.0f, 0.0f), Vector2f(15.0f, 15.0f), Vector4f(0.8f, 0.0f, 0.5f, 1.0f));
@@ -145,6 +166,7 @@ int main()
 	sprite2.addBuffer(new Buffer(vertices, 4 * 3, 3), 0);
 	sprite2.addBuffer(new Buffer(colorsB, 4 * 4, 4), 1);
 #endif
+	shader.setUniform4f("color", Vector4f(1.0f, 1.0f, 1.0f, 1.0f));
 #endif
 
 	Timer time;
@@ -227,8 +249,10 @@ int main()
 		renderer.Flush();
 #endif
 
+
 		layer.Draw();
-		layerB.Draw();
+		//layerB.Draw();
+
 
 		window.Update();
 
@@ -244,4 +268,7 @@ int main()
 			time.Reset();
 		}
 	}
+
+	delete texture;
+	return 0;
 }

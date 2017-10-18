@@ -31,6 +31,8 @@ namespace Leopard
 			GLint getUniform(GLchar* name);
 
 			void setUniform1f(const GLchar* name, float value);
+			void setUniform1fv(const GLchar* name, float* value, int count);
+			void setUniform1iv(const GLchar* name, int* value, int count);
 			void setUniform1i(const GLchar* name, int value);
 			void setUniform2f(const GLchar* name, const Vector2f& vecter2f);
 			void setUniform3f(const GLchar* name, const Vector3f& vector3f);

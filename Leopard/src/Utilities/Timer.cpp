@@ -1,7 +1,5 @@
 #include "Timer.h"
 
-
-
 Timer::Timer()
 {
 	LARGE_INTEGER frequency;
